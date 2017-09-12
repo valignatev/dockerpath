@@ -3,7 +3,7 @@ url = "https://pypi.python.org/simple"
 verify_ssl = true
 
 [packages]
-docker = "*"
+docker = ">=2.5"
 
 [dev-packages]
 pytest = "*"
