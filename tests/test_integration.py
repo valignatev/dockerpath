@@ -55,7 +55,10 @@ def test_modifies_sys_path_on_setup(container):
     old_sys_path = sys.path.copy()
     dockerpath.setup(container.name)
     new_sys_path = sys.path.copy()
+    diff = set(new_sys_path) - set(old_sys_path)
     assert 5 == len(new_sys_path) - len(old_sys_path)
+    for path in diff:
+        assert '{}:'.format(container.name) in path
 
 
 @pytest.mark.xfail(reason='Not ready yet', raises=ImportError, strict=True)
