@@ -31,13 +31,23 @@ def container():
     container.remove()
 
 
+@pytest.fixture
+def expected_raw_sys_path():
+    return (
+        b'\n/usr/local/lib/python36.zip\n'
+        b'/usr/local/lib/python3.6\n'
+        b'/usr/local/lib/python3.6/lib-dynload\n'
+        b'/usr/local/lib/python3.6/site-packages\n'
+    )
+
+
 def test_can_not_import_if_was_not_setup(container):
     with pytest.raises(ImportError):
         import django
 
 
-# def test_able_to_get_sys_path_from_container(container):
-
+def test_able_to_get_sys_path_from_container(container, expected_raw_sys_path):
+    assert expected_raw_sys_path == dockerpath.remote_sys_path(container)
 
 
 @pytest.mark.xfail(reason='Not ready yet', raises=AssertionError, strict=True)
