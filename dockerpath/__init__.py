@@ -1,3 +1,6 @@
+def setup(container_name):
+    pass
+
 def parse_remote_path(raw_path: bytes) -> list:
     return raw_path.decode().split('\n')[:-1]
 

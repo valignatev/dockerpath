@@ -1,7 +1,10 @@
 import os
+import sys
 
 import docker
 import pytest
+
+import dockerpath
 
 
 @pytest.fixture(scope='module')
@@ -33,8 +36,15 @@ def test_can_not_import_if_was_not_setup(container):
         import django
 
 
-@pytest.mark.xfail(reason='Not ready yet', raises=AttributeError, strict=True)
+@pytest.mark.xfail(reason='Not ready yet', raises=AssertionError, strict=True)
+def test_modifies_sys_path_on_setup():
+    old_sys_path = sys.path.copy()
+    dockerpath.setup('dockerpaht_test_cnt')
+    new_sys_path = sys.path.copy()
+    assert len(new_sys_path) > len(old_sys_path)
+
+
+@pytest.mark.xfail(reason='Not ready yet', raises=ImportError, strict=True)
 def test_successfully_imports_if_setup(container):
-    import dockerpath
     dockerpath.setup('dockerpath_test_cnt')
     import django
