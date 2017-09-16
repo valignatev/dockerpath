@@ -7,9 +7,6 @@ import pytest
 import dockerpath
 
 
-TEST_CONTAINER_NAME = 'dockerpath_test_cnt'
-
-
 @pytest.fixture(scope='module')
 def container():
     client = docker.from_env()
@@ -24,7 +21,7 @@ def container():
     container = client.containers.run(
         'dockerpath_test:latest',
         detach=True,
-        name=TEST_CONTAINER_NAME,
+        name='dockerpath_test_cnt',
         command='top',
     )
     yield container
@@ -39,6 +36,10 @@ def test_can_not_import_if_was_not_setup(container):
         import django
 
 
+# def test_able_to_get_sys_path_from_container(container):
+
+
+
 @pytest.mark.xfail(reason='Not ready yet', raises=AssertionError, strict=True)
 def test_modifies_sys_path_on_setup():
     old_sys_path = sys.path.copy()
@@ -49,5 +50,5 @@ def test_modifies_sys_path_on_setup():
 
 @pytest.mark.xfail(reason='Not ready yet', raises=ImportError, strict=True)
 def test_successfully_imports_if_setup(container):
-    dockerpath.setup(TEST_CONTAINER_NAME)
+    dockerpath.setup(container.name)
     import django
