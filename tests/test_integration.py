@@ -7,6 +7,9 @@ import pytest
 import dockerpath
 
 
+TEST_CONTAINER_NAME = 'dockerpath_test_cnt'
+
+
 @pytest.fixture(scope='module')
 def container():
     client = docker.from_env()
@@ -21,7 +24,7 @@ def container():
     container = client.containers.run(
         'dockerpath_test:latest',
         detach=True,
-        name='dockerpath_test_cnt',
+        name=TEST_CONTAINER_NAME,
         command='top',
     )
     yield container
@@ -46,5 +49,5 @@ def test_modifies_sys_path_on_setup():
 
 @pytest.mark.xfail(reason='Not ready yet', raises=ImportError, strict=True)
 def test_successfully_imports_if_setup(container):
-    dockerpath.setup('dockerpath_test_cnt')
+    dockerpath.setup(TEST_CONTAINER_NAME)
     import django
