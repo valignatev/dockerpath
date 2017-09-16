@@ -34,7 +34,8 @@ def container():
 @pytest.fixture
 def expected_raw_sys_path():
     return (
-        b'\n/usr/local/lib/python36.zip\n'
+        b'\n'
+        b'/usr/local/lib/python36.zip\n'
         b'/usr/local/lib/python3.6\n'
         b'/usr/local/lib/python3.6/lib-dynload\n'
         b'/usr/local/lib/python3.6/site-packages\n'
@@ -50,12 +51,11 @@ def test_able_to_get_sys_path_from_container(container, expected_raw_sys_path):
     assert expected_raw_sys_path == dockerpath.remote_sys_path(container)
 
 
-@pytest.mark.xfail(reason='Not ready yet', raises=AssertionError, strict=True)
-def test_modifies_sys_path_on_setup():
+def test_modifies_sys_path_on_setup(container):
     old_sys_path = sys.path.copy()
-    dockerpath.setup('dockerpaht_test_cnt')
+    dockerpath.setup(container.name)
     new_sys_path = sys.path.copy()
-    assert len(new_sys_path) > len(old_sys_path)
+    assert 5 == len(new_sys_path) - len(old_sys_path)
 
 
 @pytest.mark.xfail(reason='Not ready yet', raises=ImportError, strict=True)

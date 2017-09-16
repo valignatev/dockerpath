@@ -1,5 +1,18 @@
+import sys
+
+import docker
+
+
 def setup(container_name):
-    pass
+    client = docker.from_env()
+    container = client.containers.get(container_name)
+    container_sys_path = with_container_info(
+        container.name,
+        parse_remote_path(
+            remote_sys_path(container)
+        )
+    )
+    sys.path += container_sys_path
 
 
 def remote_sys_path(container):
