@@ -28,6 +28,13 @@ def container():
     container.remove()
 
 
-@pytest.mark.xfail(reason='Not ready yet', raises=ImportError, strict=True)
-def test_integration(container):
+def test_can_not_import_if_was_not_setup(container):
+    with pytest.raises(ImportError):
+        import django
+
+
+@pytest.mark.xfail(reason='Not ready yet', raises=AttributeError, strict=True)
+def test_successfully_imports_if_setup(container):
+    import dockerpath
+    dockerpath.setup('dockerpath_test_cnt')
     import django
