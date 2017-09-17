@@ -8,6 +8,7 @@ python:
 install:
   - pip install pipenv pew
   - pipenv install -e .
+  - pipenv install --dev
 
 script:
   - coverage run --source dockerpath -m py.test
