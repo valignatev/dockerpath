@@ -10,4 +10,7 @@ install:
   - pipenv install -e .
 
 script:
-  - pipenv run pytest
+  - coverage run --source dockerpath -m py.test
+
+after_script:
+  - pip install --quiet coveralls && coveralls
