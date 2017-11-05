@@ -8,7 +8,6 @@ python:
 install:
   - pip install pipenv pew
   - pipenv install --dev
-  - pipenv shell
   - pip install -e .
 
 script:
