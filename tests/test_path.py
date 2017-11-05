@@ -21,9 +21,9 @@ def test_prepends_remote_paths_with_container_info():
         parse_remote_path(raw_output),
     )
     assert modified_remote_path == [
-        'cnt_name:',
-        'cnt_name:/usr/local/lib/python36.zip',
-        'cnt_name:/usr/local/lib/python3.6',
-        'cnt_name:/usr/local/lib/python3.6/lib-dynload',
-        'cnt_name:/usr/local/lib/python3.6/site-packages',
+        'dockerpath-cnt_name:',
+        'dockerpath-cnt_name:/usr/local/lib/python36.zip',
+        'dockerpath-cnt_name:/usr/local/lib/python3.6',
+        'dockerpath-cnt_name:/usr/local/lib/python3.6/lib-dynload',
+        'dockerpath-cnt_name:/usr/local/lib/python3.6/site-packages',
     ]

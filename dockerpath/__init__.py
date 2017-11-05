@@ -26,4 +26,4 @@ def parse_remote_path(raw_path: bytes) -> list:
 
 
 def with_container_info(container_name: str, path) -> list:
-    return ['{}:{}'.format(container_name, p) for p in path]
+    return ['dockerpath-{}:{}'.format(container_name, p) for p in path]
